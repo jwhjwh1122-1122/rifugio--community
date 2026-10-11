@@ -11,7 +11,8 @@ const RELAY_KEY = process.env.RELAY_KEY || '';
 const TIMEOUT_MS = Number(process.env.RELAY_TIMEOUT_MS) || 140000;
 const MAX_CONCURRENT = Number(process.env.RELAY_MAX_CONCURRENT) || 3;
 const DEFAULT_MODEL = process.env.RELAY_DEFAULT_MODEL || 'sonnet';
-const CLAUDE_BIN = process.env.CLAUDE_BIN || 'claude';
+const LOCAL_BIN = path.join(__dirname, 'node_modules', '.bin', 'claude');
+const CLAUDE_BIN = process.env.CLAUDE_BIN || (fs.existsSync(LOCAL_BIN) ? LOCAL_BIN : 'claude');
 const WORKDIR = fs.mkdtempSync(path.join(os.tmpdir(), 'relay-'));
 let running = 0;
 
@@ -171,4 +172,4 @@ const server = http.createServer(async (req, res) => {
 
 if (!process.env.CLAUDE_CODE_OAUTH_TOKEN) console.warn('[relay] WARNING: CLAUDE_CODE_OAUTH_TOKEN is not set');
 if (!RELAY_KEY) console.warn('[relay] WARNING: RELAY_KEY is not set, anyone can use this relay');
-server.listen(PORT, () => console.log(`[relay] listening on ${PORT}`));
+server.listen(PORT, () => console.log(`[relay] listening on ${PORT}, claude=${CLAUDE_BIN}`));

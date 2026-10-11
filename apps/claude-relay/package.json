@@ -1,0 +1,16 @@
+{
+  "name": "claude-relay",
+  "version": "1.0.0",
+  "private": true,
+  "description": "OpenAI-compatible chat endpoint backed by claude -p and a Claude subscription token",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-code": "latest"
+  }
+}
